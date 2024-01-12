@@ -1,0 +1,4 @@
+[mysql]
+acc = root
+pwd = 1qaz@WSX
+cmd = mysql -u root -p
