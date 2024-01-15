@@ -1,4 +1,5 @@
 /ignore_folder/
+/test_api/ignore_folder/
 /venv_3.9/
 .idea/
 *.iml

@@ -19,7 +19,7 @@ def test_upload_api(file_path, api_url):
 
 if __name__ == "__main__":
     # Replace with the actual file path on your Windows machine
-    file_path = '.\\this_is_text_file.txt'
+    file_path = '.\\elon_musk.txt'
     
     # Replace with the public IP address of your VM
     api_url = 'http://20.167.56.156:8000'

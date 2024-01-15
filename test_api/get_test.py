@@ -17,5 +17,5 @@ def test_get_file(uid):
         print(f"Error downloading file for UID: {uid}. Status code: {response.status_code}")
 
 if __name__ == "__main__":
-    test_uid = "9aea2940-041a-4588-b26a-eb49bfa7a3b7"
+    test_uid = "ddc0f3d0-e439-4291-9239-2b645ef66742"
     test_get_file(test_uid)
