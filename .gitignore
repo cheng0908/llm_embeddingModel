@@ -1,3 +1,10 @@
 /ignore_folder/
-main_code/.env
 /venv_3.9/
+.idea/
+*.iml
+*.iws
+*.ipr
+*.pyc
+*.pyo
+*.pyd
+__pycache__/**
