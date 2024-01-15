@@ -1,9 +1,7 @@
-from sqlalchemy import create_engine, Column, Integer, String, DateTime
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
-from dotenv import load_dotenv
+# database.py
+from mysql.connector import connect, Error
 import os
-import datetime
+from dotenv import load_dotenv
 
 load_dotenv()
 
@@ -11,16 +9,48 @@ MYSQL_USERNAME = os.getenv("MYSQL_USERNAME")
 MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD")
 DATABASE_NAME = os.getenv("DATABASE_NAME")
 
-MYSQL_DATABASE_URL = f"mysql+mysqlconnector://{MYSQL_USERNAME}:{MYSQL_PASSWORD}@localhost:3306/{DATABASE_NAME}"
+MYSQL_CONNECTION_CONFIG = {
+    "host": "localhost",
+    "user": MYSQL_USERNAME,
+    "password": MYSQL_PASSWORD,
+    "database": DATABASE_NAME,
+    "port": 3306,
+}
 
-engine = create_engine(MYSQL_DATABASE_URL)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+def get_db():
+    try:
+        connection = connect(**MYSQL_CONNECTION_CONFIG)
+        cursor = connection.cursor(dictionary=True)
+        yield connection, cursor
+    except Error as e:
+        print(f"Error connecting to MySQL: {e}")
+        raise
+    finally:
+        cursor.close()
+        connection.close()
 
-Base = declarative_base()
 
-class UploadedFile(Base):
-    __tablename__ = "uploaded_files"
 
-    id = Column(Integer, primary_key=True, index=True)
-    filename = Column(String, index=True)
-    uploaded_at = Column(DateTime, default=datetime.datetime.utcnow)
+def create_table():
+    try:
+        connection = connect(**MYSQL_CONNECTION_CONFIG)
+        cursor = connection.cursor()
+
+        # Define your table creation SQL statement here
+        create_table_sql = """
+        CREATE TABLE IF NOT EXISTS upload_record (
+            uid VARCHAR(36) PRIMARY KEY,
+            filename VARCHAR(255) NOT NULL,
+            location VARCHAR(255),
+            uploaded_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        );
+        """
+
+        cursor.execute(create_table_sql)
+        connection.commit()
+    except Error as e:
+        print(f"Error creating table: {e}")
+        raise
+    finally:
+        cursor.close()
+        connection.close()
