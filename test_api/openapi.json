@@ -1,0 +1,228 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+      "title": "FastAPI",
+      "version": "0.1.0"
+    },
+    "paths": {
+      "/upload/": {
+        "post": {
+          "summary": "Create Upload File",
+          "operationId": "create_upload_file_upload__post",
+          "requestBody": {
+            "content": {
+              "multipart/form-data": {
+                "schema": {
+                  "$ref": "#/components/schemas/Body_create_upload_file_upload__post"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "Successful Response",
+              "content": {
+                "application/json": {
+                  "schema": {}
+                }
+              }
+            },
+            "422": {
+              "description": "Validation Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/HTTPValidationError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/get_file/{uid}": {
+        "get": {
+          "summary": "Get File By Uid",
+          "operationId": "get_file_by_uid_get_file__uid__get",
+          "parameters": [
+            {
+              "name": "uid",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "title": "Uid"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful Response",
+              "content": {
+                "application/json": {
+                  "schema": {}
+                }
+              }
+            },
+            "422": {
+              "description": "Validation Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/HTTPValidationError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/save_conversation/": {
+        "post": {
+          "summary": "Save Conversation",
+          "operationId": "save_conversation_save_conversation__post",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Body_save_conversation_save_conversation__post"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "Successful Response",
+              "content": {
+                "application/json": {
+                  "schema": {}
+                }
+              }
+            },
+            "422": {
+              "description": "Validation Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/HTTPValidationError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/get_conversation/{uid}": {
+        "get": {
+          "summary": "Get Conversation By Uid",
+          "operationId": "get_conversation_by_uid_get_conversation__uid__get",
+          "parameters": [
+            {
+              "name": "uid",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "title": "Uid"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful Response",
+              "content": {
+                "application/json": {
+                  "schema": {}
+                }
+              }
+            },
+            "422": {
+              "description": "Validation Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/HTTPValidationError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "Body_create_upload_file_upload__post": {
+          "properties": {
+            "file": {
+              "type": "string",
+              "format": "binary",
+              "title": "File"
+            }
+          },
+          "type": "object",
+          "required": ["file"],
+          "title": "Body_create_upload_file_upload__post"
+        },
+        "Body_save_conversation_save_conversation__post": {
+          "properties": {
+            "conversation_uid": {
+              "type": "string",
+              "title": "Conversation Uid"
+            },
+            "chat_content_result": {
+              "type": "string",
+              "title": "Chat Content Result"
+            }
+          },
+          "type": "object",
+          "required": ["conversation_uid", "chat_content_result"],
+          "title": "Body_save_conversation_save_conversation__post"
+        },
+        "HTTPValidationError": {
+          "properties": {
+            "detail": {
+              "items": {
+                "$ref": "#/components/schemas/ValidationError"
+              },
+              "type": "array",
+              "title": "Detail"
+            }
+          },
+          "type": "object",
+          "title": "HTTPValidationError"
+        },
+        "ValidationError": {
+          "properties": {
+            "loc": {
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "integer"
+                  }
+                ]
+              },
+              "type": "array",
+              "title": "Location"
+            },
+            "msg": {
+              "type": "string",
+              "title": "Message"
+            },
+            "type": {
+              "type": "string",
+              "title": "Error Type"
+            }
+          },
+          "type": "object",
+          "required": ["loc", "msg", "type"],
+          "title": "ValidationError"
+        }
+      }
+    }
+  }
